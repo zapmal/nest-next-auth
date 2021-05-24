@@ -36,3 +36,4 @@ lerna-debug.log*
 cats
 app.service.ts
 app.controller.ts
+.env

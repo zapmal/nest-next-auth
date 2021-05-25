@@ -8,17 +8,29 @@ import {
   ParseIntPipe,
   Post,
   UsePipes,
+  Put,
 } from '@nestjs/common';
 
 import { UserService } from './user.service';
-import { CreateUserDTO } from './user.dto';
+import { CreateUserDTO, UpdateUserDTO } from './user.dto';
 import { createUserSchema } from './user.schemas';
 
 import { JoiValidationPipe } from '../../utils/joi.pipe';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Get()
+  async getAllUsers() {
+    const users = await this.userService.getAllUsers();
+
+    if (!users) {
+      throw new NotFound('There are no users in the system.');
+    }
+
+    return users;
+  }
 
   @Get(':id')
   async getUser(@Param('id', ParseIntPipe) id: number) {
@@ -45,6 +57,22 @@ export class UserController {
       throw new NotFound('Requested user was not found.');
     }
 
-    return { message: `User was successfully erased from the system.` };
+    return { message: 'User successfully erased from the system.' };
+  }
+
+  @Put(':id')
+  async updateUser(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() newUserData: UpdateUserDTO,
+  ) {
+    const userExists = await this.userService.getUserByID(id);
+
+    if (!userExists) {
+      throw new NotFound('Requested user was not found.');
+    }
+
+    await this.userService.updateUser(id, newUserData);
+
+    return { message: 'User updated successfully.' };
   }
 }

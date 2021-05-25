@@ -7,6 +7,10 @@ import { Prisma, User } from '@prisma/client';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+  getAllUsers(): Promise<User[]> {
+    return this.prisma.user.findMany();
+  }
+
   getUserByID(id: number): Promise<User> {
     return this.prisma.user.findUnique({ where: { id } });
   }
@@ -17,5 +21,12 @@ export class UserService {
 
   deleteUserByID(id: number): Promise<User> {
     return this.prisma.user.delete({ where: { id } });
+  }
+
+  updateUser(id: number, newUserData: Prisma.UserUpdateInput): Promise<User> {
+    return this.prisma.user.update({
+      where: { id },
+      data: newUserData,
+    });
   }
 }

@@ -34,6 +34,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 cats
-app.service.ts
-app.controller.ts
 .env

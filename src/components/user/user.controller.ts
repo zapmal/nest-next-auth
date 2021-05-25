@@ -45,10 +45,6 @@ export class UserController {
       throw new NotFound('Requested user was not found.');
     }
 
-    const deletedUser = await this.userService.deleteUserByID(id);
-
-    return {
-      message: `User "${deletedUser.name}" was erased from the system.`,
-    };
+    return { message: `User was successfully erased from the system.` };
   }
 }

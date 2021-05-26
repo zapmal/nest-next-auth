@@ -1,6 +1,7 @@
 
-model User {
+model Users {
   id Int @default(autoincrement()) @id
   email String @unique
   name String?
+  password String
 }

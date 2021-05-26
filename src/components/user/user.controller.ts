@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 
 import { UserService } from './user.service';
-import { CreateUserDTO, UpdateUserDTO } from './user.dto';
-import { createUserSchema, updateUserSchema } from './user.schemas';
+import { UpdateUserDTO } from './user.dto';
+import { updateUserSchema } from './user.schemas';
 
 import { JoiValidationPipe } from '../../utils/joi.pipe';
 
@@ -41,12 +41,6 @@ export class UserController {
     }
 
     return user;
-  }
-
-  @Post()
-  @UsePipes(new JoiValidationPipe(createUserSchema))
-  async createUser(@Body() userData: CreateUserDTO) {
-    return await this.userService.createUser(userData);
   }
 
   @Delete(':id')

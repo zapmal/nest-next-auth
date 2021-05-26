@@ -5,5 +5,5 @@ export class CreateUserDTO {
 
 export class UpdateUserDTO {
   name?: string;
-  email: string;
+  email?: string;
 }

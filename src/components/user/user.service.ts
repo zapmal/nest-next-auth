@@ -11,7 +11,7 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
-  getUserByID(id: number): Promise<User> {
+  getUser(id: number): Promise<User> {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
@@ -19,7 +19,7 @@ export class UserService {
     return this.prisma.user.create({ data: userData });
   }
 
-  deleteUserByID(id: number): Promise<User> {
+  deleteUser(id: number): Promise<User> {
     return this.prisma.user.delete({ where: { id } });
   }
 

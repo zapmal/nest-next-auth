@@ -13,7 +13,7 @@ import {
 
 import { UserService } from './user.service';
 import { CreateUserDTO, UpdateUserDTO } from './user.dto';
-import { createUserSchema } from './user.schemas';
+import { createUserSchema, updateUserSchema } from './user.schemas';
 
 import { JoiValidationPipe } from '../../utils/joi.pipe';
 
@@ -34,7 +34,7 @@ export class UserController {
 
   @Get(':id')
   async getUser(@Param('id', ParseIntPipe) id: number) {
-    const user = await this.userService.getUserByID(id);
+    const user = await this.userService.getUser(id);
 
     if (!user) {
       throw new NotFound('Requested user was not found.');
@@ -51,21 +51,24 @@ export class UserController {
 
   @Delete(':id')
   async deleteUser(@Param('id', ParseIntPipe) id: number) {
-    const userExists = await this.userService.getUserByID(id);
+    const userExists = await this.userService.getUser(id);
 
     if (!userExists) {
       throw new NotFound('Requested user was not found.');
     }
 
+    await this.userService.deleteUser(id);
+
     return { message: 'User successfully erased from the system.' };
   }
 
   @Put(':id')
+  @UsePipes(new JoiValidationPipe(updateUserSchema))
   async updateUser(
     @Param('id', ParseIntPipe) id: number,
     @Body() newUserData: UpdateUserDTO,
   ) {
-    const userExists = await this.userService.getUserByID(id);
+    const userExists = await this.userService.getUser(id);
 
     if (!userExists) {
       throw new NotFound('Requested user was not found.');

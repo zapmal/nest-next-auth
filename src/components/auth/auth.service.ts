@@ -4,13 +4,13 @@ import { Prisma, Users as User } from '.prisma/client';
 
 @Injectable()
 export class AuthService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
   signup(userData: Prisma.UsersCreateInput): Promise<User> {
-    return this.prismaService.users.create({ data: userData });
+    return this.prisma.users.create({ data: userData });
   }
 
   getUserByEmail(email: string): Promise<User> {
-    return this.prismaService.users.findFirst({ where: { email: email } });
+    return this.prisma.users.findFirst({ where: { email: email } });
   }
 }

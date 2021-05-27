@@ -6,8 +6,13 @@ import {
   UnauthorizedException as Unauthorized,
   NotFoundException as NotFound,
   UsePipes,
+  Res,
 } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
+import { v4 as uuid } from 'uuid';
+import { sign } from 'jsonwebtoken';
+import { Response } from 'express';
+
 import { JoiValidationPipe } from 'src/utils/joi.pipe';
 import { SigninDTO, SignupDTO } from './auth.dto';
 import { signinSchema, signupSchema } from './auth.schemas';
@@ -27,6 +32,7 @@ export class AuthController {
       name,
       password: hashedPassword,
       email,
+      refresh_token: uuid(),
     });
 
     if (!user) {
@@ -35,12 +41,22 @@ export class AuthController {
       );
     }
 
-    return user;
+    const token = sign({ user }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRY_TIME,
+    });
+
+    return {
+      ...user,
+      token,
+    };
   }
 
   @Post('signin')
   @UsePipes(new JoiValidationPipe(signinSchema))
-  async signin(@Body() userCredentials: SigninDTO) {
+  async signin(
+    @Body() userCredentials: SigninDTO,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     const user = await this.authService.getUserByEmail(userCredentials.email);
 
     if (!user) {
@@ -56,6 +72,15 @@ export class AuthController {
       throw new Unauthorized('The password does not match.');
     }
 
-    return { message: 'Signed in successfully.' };
+    const token = sign({ user }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRY_TIME,
+    });
+
+    response.cookie('refresh-token', user.refresh_token);
+
+    return {
+      message: 'Signed in successfully.',
+      token,
+    };
   }
 }

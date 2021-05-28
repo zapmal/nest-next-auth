@@ -12,5 +12,4 @@ model Users {
   email String @unique @db.VarChar(125)
   name String? @db.VarChar(125)
   password String @db.VarChar(255)
-  refresh_token String?
 }

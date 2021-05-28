@@ -36,3 +36,4 @@ lerna-debug.log*
 .env
 REFERENCES.md
 set-cookie.ts
+auth.jwt.guard.ts

@@ -14,6 +14,21 @@ export class AuthGuard implements CanActivate {
   }
 
   validate(request: Request & { user: Record<string, unknown> }) {
+    const token = request.cookies['token'];
+    const SECRET = process.env.JWT_SECRET;
+
+    if (!token) return false;
+
+    const user = verify(token, SECRET) as Record<string, unknown>;
+
+    if (!user) return false;
+
+    request.user = user;
+
+    return true;
+  }
+
+  validateJwt(request: Request & { user: Record<string, unknown> }) {
     const authHeader = request.headers.authorization;
     const SECRET = process.env.JWT_SECRET;
 

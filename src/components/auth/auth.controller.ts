@@ -8,17 +8,20 @@ import {
   UsePipes,
   Res,
   Get,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
-import { v4 as uuid } from 'uuid';
 import { sign } from 'jsonwebtoken';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 import { JoiValidationPipe } from 'src/utils/joi.pipe';
 import { SigninDTO, SignupDTO } from './auth.dto';
 import { signinSchema, signupSchema } from './auth.schemas';
 
 import { AuthService } from './auth.service';
+import { AuthGuard } from 'src/utils/auth.guard';
+import { cookieOptions } from 'src/utils/cookie';
 
 @Controller()
 export class AuthController {
@@ -26,19 +29,21 @@ export class AuthController {
 
   @Post('signup')
   @UsePipes(new JoiValidationPipe(signupSchema))
-  async signup(@Body() { name, password, email }: SignupDTO) {
+  async signup(
+    @Body() { name, password, email }: SignupDTO,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     const hashedPassword = await hash(password, 10);
 
     const user = await this.authService.signup({
       name,
       password: hashedPassword,
       email,
-      refresh_token: uuid(),
     });
 
     if (!user) {
       throw new BadRequest(
-        'Something went wrong when trying to create the user, try again.',
+        'Something went wrong while trying to create the user, try again.',
       );
     }
 
@@ -46,10 +51,9 @@ export class AuthController {
       expiresIn: process.env.JWT_EXPIRY_TIME,
     });
 
-    return {
-      ...user,
-      token,
-    };
+    response.cookie('token', token, cookieOptions);
+
+    return user;
   }
 
   @Post('signin')
@@ -73,20 +77,24 @@ export class AuthController {
       throw new Unauthorized('The password does not match.');
     }
 
-    const token = sign({ user }, process.env.JWT_SECRET, {
+    const token = sign(user, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRY_TIME,
     });
 
-    response.cookie('refresh-token', user.refresh_token);
+    response.cookie('token', token, cookieOptions);
 
-    return {
-      message: 'Signed in successfully.',
-      token,
-    };
+    return { message: 'Signed in successfully.' };
   }
 
-  @Get('/refresh')
-  refresh() {
-    console.log('refresh the token here');
+  @Get('csrf')
+  getCsrfToken(@Req() request: Request) {
+    return { csrf: request.csrfToken() };
+  }
+
+  // For dev-tests only to check auth.
+  @Get('whoami')
+  @UseGuards(AuthGuard)
+  test(@Req() request: Request & { user: Record<string, unknown> }) {
+    return { user: request.user };
   }
 }

@@ -7,6 +7,7 @@ import {
   NotFoundException as NotFound,
   UsePipes,
   Res,
+  Get,
 } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
@@ -82,5 +83,10 @@ export class AuthController {
       message: 'Signed in successfully.',
       token,
     };
+  }
+
+  @Get('/refresh')
+  refresh() {
+    console.log('refresh the token here');
   }
 }

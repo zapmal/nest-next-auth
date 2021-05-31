@@ -6,7 +6,7 @@ import * as csurf from 'csurf';
 import { cookieOptions } from './utils/cookie';
 
 async function bootstrap() {
-  const PORT = 3000 || process.env.PORT;
+  const PORT = 4000 || process.env.PORT;
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix('api');

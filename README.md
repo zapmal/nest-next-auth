@@ -1,2 +1,1 @@
-# NestJS + Next.js Auth
-
+# NestJS REST-API + Next.JS Auth system

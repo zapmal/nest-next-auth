@@ -1,5 +1,11 @@
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+import Layout from 'components/Layout';
 
-export default MyApp
+const MyApp = ({ Component, pageProps }) => {
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
+};
+
+export default MyApp;

@@ -1,8 +1,9 @@
-import { globalStyles } from "../../stitches.config";
+import { globalStyles } from 'stitches';
 
 const App = () => {
   globalStyles();
-  return <h2>lolmao</h2>;
+
+  return <h2>lol</h2>;
 };
 
 export default App;

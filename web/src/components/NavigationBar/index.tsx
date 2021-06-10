@@ -12,7 +12,7 @@ const NavigationBar = () => {
     <Nav>
       <Link href='/'>
         <Header>
-          TSAB <span><Lock/></span>
+          The Simple Auth Boilerplate <span><Lock/></span>
         </Header>
       </Link>
       {ROUTES.map((route, index) => (

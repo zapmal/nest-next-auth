@@ -17,7 +17,7 @@ const Container = styled('footer', {
 const Footer = () => {
   return (
     <Container>
-      <p>TSAB was made using <strong>NestJS, Next.js and TypeScript</strong>.</p>
+      <p>This was made using <strong>NestJS, Next.js and TypeScript</strong>.</p>
     </Container>
   );
 };

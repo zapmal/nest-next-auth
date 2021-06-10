@@ -11,7 +11,7 @@ const NavigationBar = () => {
   return (
     <Nav>
       <Link href='/'>
-          <Header>Authify</Header>
+          <Header>TSAB</Header>
       </Link>
       {ROUTES.map((route, index) => (
         <Link href={route.href} key={index}>

@@ -4,7 +4,7 @@ const Container = styled('footer', {
   position: 'absolute',
   bottom: 0,
   width: '100%',
-  height: '80px',
+  height: '90px',
   backgroundColor: '$secondary',
   color: '$primary',
   textAlign: 'center',

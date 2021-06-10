@@ -7,9 +7,9 @@ export const { styled, css, global, keyframes, getCssString, theme } =
         primary: '#f9f9f9',
         primaryLight: '#ffffff',
         primaryDark: '#c6c6c6',
-        secondary: '#d81b60',
-        secondaryLight: '#ff5c8d',
-        secondaryDark: '#a00037',
+        secondary: '#3f50b5',
+        secondaryLight: '#757ce8',
+        secondaryDark: '#002884'
       },
       fonts: {
         main: 'Poppins',

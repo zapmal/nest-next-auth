@@ -21,7 +21,8 @@
     "paths": {
       "components": ["/components"],
       "utils": ["/utils"],
-      "stitches": ["../stitches.config.ts"]
+      "stitches": ["../stitches.config.ts"],
+      "assets": ["../assets"]
     }
   },
   "include": [

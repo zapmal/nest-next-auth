@@ -17,6 +17,9 @@ export const Header = styled('h3', {
   padding: '$3 $5',
   margin: 0,
   cursor: 'pointer',
+  '& span': {
+    verticalAlign: 'middle'
+  }
 });
 
 export const NavLink = styled('a', {

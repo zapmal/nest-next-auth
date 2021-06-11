@@ -18,7 +18,7 @@ interface ColoredHeaderProps {
   secondHalf: string;
 }
 
-export const ColoredHeader: React.FC<ColoredHeaderProps> = ({
+const ColoredHeader: React.FC<ColoredHeaderProps> = ({
   firstHalf,
   secondHalf,
 }) => {
@@ -29,3 +29,6 @@ export const ColoredHeader: React.FC<ColoredHeaderProps> = ({
     </h1>
   );
 };
+
+
+export default ColoredHeader;

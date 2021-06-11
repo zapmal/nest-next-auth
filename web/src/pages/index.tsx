@@ -1,7 +1,9 @@
-import { styled, globalStyles } from 'stitches';
+import { styled } from 'stitches';
 import Image from 'next/image';
 
-const Wrapper = styled('div', {
+import Highlight from 'components/Highlight';
+
+const FlexContainer = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
 });
@@ -24,29 +26,30 @@ const Information = styled('p', {
 });
 
 const App = () => {
-  globalStyles();
-
   return (
-    <Wrapper>
+    <FlexContainer>
       <Container>
-        <Header>Simple <em>but</em> secure Auth Strategy</Header>
+        <Header>
+          Simple <em>but</em> secure Auth Strategy
+        </Header>
         <Image src='/assets/main.svg' width={350} height={300} />
       </Container>
       <Container>
         <Header>How does it work?</Header>
         <Information>
-          It uses <strong>CORS, CSRF and Cookies + JWT</strong>. It is secure,
+          It uses <Highlight tone='dark'>CORS, CSRF and Cookies + JWT</Highlight>. It is secure,
           simple and it works without to much setup or hassle. The caveat is
           that the frontend needs a proxy (next.config.js does that in this
           case) to make sure that the cookies are sent.
         </Information>
         <Information>
-          Not the most secure authentication strategy, that's for sure. But it
-          works well as a boilerplate for most of my use-cases. Refresh-token
-          auth was just too annoying.
+          Not the most secure authentication strategy, that's for sure (I
+          believe that the refresh token strategy is more secure). But it works
+          well as a boilerplate for most of my use-cases. Refresh-token auth was
+          just too annoying.
         </Information>
       </Container>
-    </Wrapper>
+    </FlexContainer>
   );
 };
 

@@ -1,7 +1,7 @@
 import { Grid, Paper, TextField, Typography, Button } from '@material-ui/core';
 import Highlight from 'components/Highlight';
 
-import { useStyles, Information } from 'components/signin-styles';
+import { useStyles, Information } from 'components/forms-styles';
 
 const Signin = () => {
   const styles = useStyles();
@@ -9,11 +9,12 @@ const Signin = () => {
   return (
     <form action='<route>' method='POST' onSubmit={() => {}}>
       <Paper elevation={4} className={styles.container}>
-        <Typography variant='h5' style={{ marginBottom: '20px' }}>Login and test the Auth</Typography>
+        <Typography variant='h5' style={{ marginBottom: '10px' }}>Login and test the Auth</Typography>
         <Grid container justify='center' spacing={3}>
           <Grid item xs={10} className={styles.verticalMargin}>
             <TextField
               fullWidth
+              required
               variant='outlined'
               label='Email'
               type='email'
@@ -24,6 +25,7 @@ const Signin = () => {
           <Grid item xs={10} className={styles.verticalMargin}>
             <TextField
               fullWidth
+              required
               variant='outlined'
               label='Password'
               type='password'

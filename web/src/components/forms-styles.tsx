@@ -1,7 +1,7 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { styled, theme } from 'stitches';
 
-const { '5': spaceFive } = theme.space;
+const { '4': spaceFour, '5': spaceFive } = theme.space;
 
 export const useStyles = makeStyles((theme) => ({
   container: {
@@ -12,6 +12,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   verticalMargin: {
     margin: '10px 0',
+  },
+  smallVerticalMargin: {
+    margin: '5px 0'
   },
 }));
 

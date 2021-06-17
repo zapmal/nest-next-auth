@@ -1,6 +1,7 @@
+import { Button } from '@material-ui/core';
 import Link from 'next/link';
 import { AiFillLock as Lock } from 'react-icons/ai';
-import { Nav, Header, NavLink } from './styles';
+import { Nav, Header } from './styles';
 
 const ROUTES = [
   { href: '/signin', name: 'Login' },
@@ -12,12 +13,21 @@ const NavigationBar = () => {
     <Nav>
       <Link href='/'>
         <Header>
-          The Simple Auth Boilerplate <span><Lock/></span>
+          The Simple Auth Boilerplate{' '}
+          <span>
+            <Lock />
+          </span>
         </Header>
       </Link>
       {ROUTES.map((route, index) => (
         <Link href={route.href} key={index}>
-          <NavLink href={route.href}>{route.name}</NavLink>
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ marginRight: '20px' }}
+          >
+            {route.name}
+          </Button>
         </Link>
       ))}
     </Nav>

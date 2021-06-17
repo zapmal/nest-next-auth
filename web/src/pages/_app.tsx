@@ -1,8 +1,9 @@
 import Layout from 'components/Layout';
 import { useEffect } from 'react';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
+
 import { globalStyles } from 'stitches';
-// import { CssBaseline } from '@material-ui/core';
+import { theme } from '../../mui-theme';
 
 const MyApp = ({ Component, pageProps }) => {
   globalStyles();
@@ -16,8 +17,7 @@ const MyApp = ({ Component, pageProps }) => {
   }, []);
 
   return (
-    <MuiThemeProvider theme={{}}>
-      {/* <CssBaseline /> */}
+    <MuiThemeProvider theme={theme}>
       <Layout>
         <Component {...pageProps} />
       </Layout>

@@ -22,6 +22,7 @@ export const Header = styled('h3', {
   }
 });
 
+// unused for now
 export const NavLink = styled('a', {
   backgroundColor: '$primary',
   color: '$secondary',

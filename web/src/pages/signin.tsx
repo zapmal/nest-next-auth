@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Grid, Paper, TextField, Typography, Button } from '@material-ui/core';
 import Highlight from 'components/Highlight';
 
@@ -5,9 +6,21 @@ import { useStyles, Information } from 'components/forms-styles';
 
 const Signin = () => {
   const styles = useStyles();
+  const [field, setField] = useState({});
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+  };
+  
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setField({
+      ...field,
+      [event.target.name]: event.target.value
+    });
+  };
 
   return (
-    <form action='<route>' method='POST' onSubmit={() => {}}>
+    <form action='<route>' method='POST' onSubmit={handleSubmit}>
       <Paper elevation={4} className={styles.container}>
         <Typography variant='h5' style={{ marginBottom: '10px' }}>Login and test the Auth</Typography>
         <Grid container justify='center' spacing={3}>
@@ -20,6 +33,7 @@ const Signin = () => {
               type='email'
               name='email'
               color='secondary'
+              onChange={handleChange}
             />
           </Grid>
           <Grid item xs={10} className={styles.verticalMargin}>
@@ -31,6 +45,7 @@ const Signin = () => {
               type='password'
               name='password'
               color='secondary'
+              onChange={handleChange}
             />
           </Grid>
         </Grid>

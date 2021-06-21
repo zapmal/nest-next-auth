@@ -23,15 +23,15 @@ export default class Document extends NextDocument {
   }
 }
 
-export async function getStaticProps(context) {
+Document.getInitialProps = async (context) => {
   const stylesheets = new ServerStyleSheets();
-  const renderPage = context.renderPage;
+  const originalRenderPage = context.renderPage;
   
-  context.renderPage = () => renderPage({
-    enhanceApp: (App) => (props) => stylesheets.collect(<App {...props}/>)
+  context.renderPage = () => originalRenderPage({
+    enhanceApp: (App) => (props) => stylesheets.collect(<App {...props}/>),
   });
   
-  const initialProps = await Document.getInitialProps(context);
+  const initialProps = await NextDocument.getInitialProps(context);
   
   return {
     ...initialProps,

@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { styled } from 'stitches';
 import Image from 'next/image';
 
@@ -37,10 +38,11 @@ const App = () => {
       <Container>
         <Header>How does it work?</Header>
         <Information>
-          It uses <Highlight tone='dark'>CORS, CSRF and Cookies + JWT</Highlight>. It is secure,
-          simple and it works without to much setup or hassle. The caveat is
-          that the frontend needs a proxy (next.config.js does that in this
-          case) to make sure that the cookies are sent.
+          It uses{' '}
+          <Highlight tone='dark'>CORS, CSRF and Cookies + JWT</Highlight>. It is
+          secure, simple and it works without to much setup or hassle. The
+          caveat is that the frontend needs a proxy (next.config.js does that in
+          this case) to make sure that the cookies are sent.
         </Information>
         <Information>
           Not the most secure authentication strategy, that's for sure (I

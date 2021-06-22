@@ -69,4 +69,4 @@ const Signin = () => {
   );
 };
 
-export default withCsrf(Signin);
+export default Signin;

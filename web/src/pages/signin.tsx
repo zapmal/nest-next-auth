@@ -4,11 +4,17 @@ import Highlight from 'components/Highlight';
 
 import { useStyles, Information } from 'components/forms-styles';
 
+import { useCsrf, withCsrf } from 'context/CsrfContext';
+
 const Signin = () => {
   const styles = useStyles();
   const [field, setField] = useState({});
+  const { state, dispatch } = useCsrf();
 
   const handleSubmit = (event: React.FormEvent) => {
+    // console.log(state);
+    // dispatch({ type: 'SET_CSRF', payload: 'lmao' });
+    // console.log(state);
     event.preventDefault();
   };
   
@@ -63,4 +69,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default withCsrf(Signin);

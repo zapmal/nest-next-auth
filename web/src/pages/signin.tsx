@@ -10,11 +10,11 @@ const Signin = () => {
   const styles = useStyles();
   const [field, setField] = useState({});
   const { state, dispatch } = useCsrf();
+  
+  React.useEffect(() => { console.log(state)}, [state]);
 
   const handleSubmit = (event: React.FormEvent) => {
-    // console.log(state);
-    // dispatch({ type: 'SET_CSRF', payload: 'lmao' });
-    // console.log(state);
+    dispatch({ type: 'SET_CSRF', payload: 'lmao' });
     event.preventDefault();
   };
   

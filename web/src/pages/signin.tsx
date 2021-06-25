@@ -1,32 +1,49 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { Grid, Paper, TextField, Typography, Button } from '@material-ui/core';
 import Highlight from 'components/Highlight';
 
 import { useStyles, Information } from 'components/forms-styles';
 
-import { useCsrf, withCsrf } from 'context/CsrfContext';
+import { useCsrf } from 'context/CsrfContext';
+
+import apiService from '../services/api';
 
 const Signin = () => {
+  const [fields, setField] = useState({});
+  const [message, setMessage] = useState('');
+  const router = useRouter();
+  const { state } = useCsrf();
   const styles = useStyles();
-  const [field, setField] = useState({});
-  const { state, dispatch } = useCsrf();
   
-  React.useEffect(() => { console.log(state)}, [state]);
-
-  const handleSubmit = (event: React.FormEvent) => {
-    dispatch({ type: 'SET_CSRF', payload: 'lmao' });
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    
+    const config = {
+      headers: {
+        'X-CSRF-Token': state.token
+      }
+    };
+    
+    try {
+      const response = await apiService.post('/signin', fields, config);
+      setMessage(response.data.message);
+      
+      router.push('/');
+    } catch (error) {
+      setMessage(error.response.data.message);
+    }
   };
   
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setField({
-      ...field,
+      ...fields,
       [event.target.name]: event.target.value
     });
   };
 
   return (
-    <form action='<route>' method='POST' onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <Paper elevation={4} className={styles.container}>
         <Typography variant='h5' style={{ marginBottom: '10px' }}>Login and test the Auth</Typography>
         <Grid container justify='center' spacing={3}>
@@ -64,7 +81,10 @@ const Signin = () => {
           Submit
         </Button>
       </Paper>
-      <Information>The CSRF token is stored in <Highlight>React Context</Highlight>.</Information>
+      {message 
+        ? <Information>{message}</Information>
+        : <Information>The CSRF token is stored in <Highlight>React Context</Highlight>.</Information>
+      }
     </form>
   );
 };

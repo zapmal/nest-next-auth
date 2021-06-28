@@ -10,10 +10,6 @@ export class AuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
 
-    console.log('headers', request.headers);
-    console.log('bare cookies', request.cookies);
-    console.log('cookie/s from header', request.headers.cookie);
-
     return this.validate(request);
   }
 

@@ -11,7 +11,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
-  app.enableCors({ origin: 'http://localhost:3000' });
+  app.enableCors({ origin: 'http://localhost:3000', credentials: true });
   app.use(cookieParser());
   app.use(csurf({ cookie: { ...cookieOptions } }));
 

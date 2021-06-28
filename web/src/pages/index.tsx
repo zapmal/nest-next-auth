@@ -4,6 +4,10 @@ import Image from 'next/image';
 
 import Highlight from 'components/Highlight';
 
+// SSR
+import Cookies from 'cookies';
+import apiService from 'services/api';
+
 const FlexContainer = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
@@ -26,7 +30,8 @@ const Information = styled('p', {
   fontSize: '$lg',
 });
 
-const App = () => {
+const App = (props) => {
+  console.log(props);
   return (
     <FlexContainer>
       <Container>
@@ -54,5 +59,19 @@ const App = () => {
     </FlexContainer>
   );
 };
+
+export async function getServerSideProps({ req: request, res: response }) {
+  const user = await apiService.get('/whoami', {
+    headers: {
+      Cookie: request.headers.cookie
+    }
+  });
+  
+  return {
+    props: {
+      user: user.data.user
+    }
+  };
+}
 
 export default App;

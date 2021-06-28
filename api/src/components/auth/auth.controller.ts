@@ -11,17 +11,17 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import {compare, hash} from 'bcrypt';
-import {sign} from 'jsonwebtoken';
-import {Request, Response} from 'express';
+import { compare, hash } from 'bcrypt';
+import { sign } from 'jsonwebtoken';
+import { Request, Response } from 'express';
 
-import {JoiValidationPipe} from 'src/utils/joi.pipe';
-import {SigninDTO, SignupDTO} from './auth.dto';
-import {signinSchema, signupSchema} from './auth.schemas';
+import { JoiValidationPipe } from 'src/utils/joi.pipe';
+import { SigninDTO, SignupDTO } from './auth.dto';
+import { signinSchema, signupSchema } from './auth.schemas';
 
-import {AuthService} from './auth.service';
-import {AuthGuard} from 'src/utils/auth.guard';
-import {cookieOptions} from 'src/utils/cookie';
+import { AuthService } from './auth.service';
+import { AuthGuard } from 'src/utils/auth.guard';
+import { cookieOptions } from 'src/utils/cookie';
 
 @Controller()
 export class AuthController {
@@ -30,8 +30,8 @@ export class AuthController {
   @Post('signup')
   @UsePipes(new JoiValidationPipe(signupSchema))
   async signup(
-    @Body() {name, password, email}: SignupDTO,
-    @Res({passthrough: true}) response: Response,
+    @Body() { name, password, email }: SignupDTO,
+    @Res({ passthrough: true }) response: Response,
   ) {
     const hashedPassword = await hash(password, 10);
 
@@ -47,7 +47,7 @@ export class AuthController {
       );
     }
 
-    const token = sign({user}, process.env.JWT_SECRET, {
+    const token = sign({ user }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRY_TIME,
     });
 
@@ -60,7 +60,7 @@ export class AuthController {
   @UsePipes(new JoiValidationPipe(signinSchema))
   async signin(
     @Body() userCredentials: SigninDTO,
-    @Res({passthrough: true}) response: Response,
+    @Res({ passthrough: true }) response: Response,
   ) {
     const user = await this.authService.getUserByEmail(userCredentials.email);
 
@@ -83,18 +83,18 @@ export class AuthController {
 
     response.cookie('token', token, cookieOptions);
 
-    return {message: 'Signed in successfully.'};
+    return { message: 'Signed in successfully.' };
   }
 
   @Get('csrf')
   getCsrfToken(@Req() request: Request) {
-    return {csrf: request.csrfToken()};
+    return { csrf: request.csrfToken() };
   }
 
   // For dev-tests only to check auth.
   @Get('whoami')
   @UseGuards(AuthGuard)
-  test(@Req() request: Request & {user: Record<string, unknown>}) {
-    return {user: request.user};
+  test(@Req() request: Request & { user: Record<string, unknown> }) {
+    return { user: request.user };
   }
 }

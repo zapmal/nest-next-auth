@@ -20,8 +20,14 @@ const MyApp = ({ Component, pageProps }) => {
     }
     
     if (!state.csrfToken) {
-      apiService.get('/csrf').then((response) => {
-        dispatch({ type: 'SET_CSRF', payload: response.data.csrf });
+      apiService.get('/csrf').then(async (csrfResponse) => {
+        dispatch({ type: 'SET_CSRF', payload: csrfResponse.data.csrf });
+        try {
+          const response = await apiService.get('/whoami');
+          dispatch({ type: 'SET_USER', payload: response.data.user });
+        } catch (error) {
+          console.log('error in /whoami', error);
+        }
       });
     }
   }, []);

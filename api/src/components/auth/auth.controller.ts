@@ -101,10 +101,16 @@ export class AuthController {
     return { csrf: request.csrfToken() };
   }
 
-  // For dev-tests only to check auth.
   @Get('whoami')
   @UseGuards(AuthGuard)
   test(@Req() request: Request & { user: Record<string, unknown> }) {
     return { user: request.user };
+  }
+
+  @Get('/logout')
+  logout(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('token');
+
+    return { message: 'Logged out successfully.' };
   }
 }

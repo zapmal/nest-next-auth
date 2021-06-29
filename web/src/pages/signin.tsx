@@ -15,7 +15,7 @@ const Signin = () => {
 
   const router = useRouter();
   const styles = useStyles();
-  const { state } = useAuth();
+  const { state, dispatch } = useAuth();
   
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -30,6 +30,7 @@ const Signin = () => {
       const response = await apiService.post('/signin', fields, config);
       setMessage(response.data.message);
       
+      dispatch({ type: 'SET_USER', payload: response.data.user });
       router.push('/');
     } catch (error) {
       setMessage(error.response.data.message);

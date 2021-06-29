@@ -1,10 +1,7 @@
 import { styled } from 'stitches';
-import { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 
 import Highlight from 'components/Highlight';
-
-import apiService from 'services/api';
 
 const FlexContainer = styled('div', {
   display: 'flex',
@@ -28,8 +25,7 @@ const Information = styled('p', {
   fontSize: '$lg',
 });
 
-const App = (props) => {
-  console.log(props);
+const App = () => {
   return (
     <FlexContainer>
       <Container>
@@ -58,18 +54,19 @@ const App = (props) => {
   );
 };
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const user = await apiService.get('/whoami', {
-    headers: {
-      cookie: context.req.headers.cookie
-    }
-  });
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+//   const user = await apiService.get('/whoami', {
+//     headers: {
+//       cookie: context.req.headers.cookie
+//     }
+//   });
+
   
-  return {
-    props: {
-      user: user.data.user
-    }
-  };
-}
+//   return {
+//     props: {
+//       user: user.data.user
+//     }
+//   };
+// }
 
 export default App;

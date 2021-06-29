@@ -11,6 +11,8 @@ export class AuthService {
   }
 
   getUserByEmail(email: string): Promise<User> {
-    return this.prisma.users.findFirst({ where: { email: email } });
+    return this.prisma.users.findFirst({
+      where: { email: email },
+    });
   }
 }

@@ -77,13 +77,23 @@ export class AuthController {
       throw new Unauthorized('The password does not match.');
     }
 
-    const token = sign(user, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRY_TIME,
-    });
+    const token = sign(
+      { email: user.email, name: user.name },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRY_TIME,
+      },
+    );
 
     response.cookie('token', token, cookieOptions);
 
-    return { message: 'Signed in successfully.' };
+    return {
+      message: 'Signed in successfully.',
+      user: {
+        email: user.email,
+        name: user.name,
+      },
+    };
   }
 
   @Get('csrf')

@@ -4,12 +4,12 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 
 import { globalStyles } from 'stitches';
 import { theme } from '../../mui-theme';
-import { useCsrf, withCsrf } from 'context/CsrfContext';
+import { useAuth, withAuth } from 'context/AuthContext';
 
 import apiService from 'services/api';
 
 const MyApp = ({ Component, pageProps }) => {
-  const { state, dispatch } = useCsrf();
+  const { state, dispatch } = useAuth();
   globalStyles();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const MyApp = ({ Component, pageProps }) => {
       materialUIStyles.parentElement.removeChild(materialUIStyles);
     }
     
-    if (!state.token) {
+    if (!state.csrfToken) {
       apiService.get('/csrf').then((response) => {
         dispatch({ type: 'SET_CSRF', payload: response.data.csrf });
       });
@@ -35,4 +35,4 @@ const MyApp = ({ Component, pageProps }) => {
   );
 };
 
-export default withCsrf(MyApp);
+export default withAuth(MyApp);

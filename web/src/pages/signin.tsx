@@ -5,23 +5,24 @@ import Highlight from 'components/Highlight';
 
 import { useStyles, Information } from 'components/forms-styles';
 
-import { useCsrf } from 'context/CsrfContext';
+import { useAuth } from 'context/AuthContext';
 
 import apiService from '../services/api';
 
 const Signin = () => {
   const [fields, setField] = useState({});
   const [message, setMessage] = useState('');
+
   const router = useRouter();
-  const { state } = useCsrf();
   const styles = useStyles();
+  const { state } = useAuth();
   
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     
     const config = {
       headers: {
-        'X-CSRF-Token': state.token
+        'X-CSRF-Token': state.csrfToken,
       }
     };
     

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
 import { styled } from 'stitches';
+import { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 
 import Highlight from 'components/Highlight';
@@ -58,7 +58,7 @@ const App = (props) => {
   );
 };
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const user = await apiService.get('/whoami', {
     headers: {
       cookie: context.req.headers.cookie

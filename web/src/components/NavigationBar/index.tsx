@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@material-ui/core';
 import { AiFillLock as Lock } from 'react-icons/ai';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 import { Nav, Header } from './styles';
 
@@ -14,7 +15,11 @@ const ROUTES = [
   { href: '/signup', name: 'Register' },
 ];
 
-const NavigationBar = () => {
+interface NavigationBarProps {
+  loading: boolean;
+}
+
+const NavigationBar: React.FC<NavigationBarProps> = ({ loading }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { state, dispatch } = useAuth();
 
@@ -25,7 +30,7 @@ const NavigationBar = () => {
       setIsLoggedIn(false);
     }
   }, [state.user]);
-  
+
   const handleLogout = async () => {
     await apiService.get('/logout');
     dispatch({ type: 'REMOVE_USER' });
@@ -41,10 +46,17 @@ const NavigationBar = () => {
           </span>
         </Header>
       </Link>
-      {isLoggedIn ? (
-        <Button 
-          variant='contained' 
-          color='primary' 
+      {loading ? (
+        <ClipLoader
+          color={'#ffffff'}
+          loading={loading}
+          size={50}
+          css='margin-right: 50px;'
+        />
+      ) : isLoggedIn ? (
+        <Button
+          variant='contained'
+          color='primary'
           style={{ marginRight: '20px' }}
           onClick={handleLogout}
         >

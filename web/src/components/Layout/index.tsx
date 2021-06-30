@@ -11,10 +11,15 @@ const Container = styled('main', {
   },
 });
 
-const Layout: React.FC<{}> = ({ children }) => {
+interface LayoutProps {
+  isLoading: boolean;
+  children: React.ReactNode;
+};
+
+const Layout: React.FC<LayoutProps> = ({ isLoading, children }) => {
   return (
     <>
-      <NavigationBar/>
+      <NavigationBar loading={isLoading} />
       <Container>{children}</Container>
       <Footer/>
     </>

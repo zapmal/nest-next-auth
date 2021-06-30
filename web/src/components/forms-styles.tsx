@@ -3,7 +3,7 @@ import { styled, theme } from 'stitches';
 
 const { '4': spaceFour, '5': spaceFive } = theme.space;
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
   container: {
     padding: `${spaceFive} 10px`,
     width: '50%',

@@ -4,7 +4,7 @@ import { styled } from 'stitches';
 
 interface HighlightProps {
   tone?: 'neutral' | 'dark' | 'light';
-  children: React.ReactNode;
+  children: React.ReactChildren;
 }
 
 const StyledHighlight = styled('strong', {

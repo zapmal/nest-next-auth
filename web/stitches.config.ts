@@ -1,15 +1,19 @@
 import { createCss } from '@stitches/react';
+import {
+  gray,
+  violetDark
+} from '@radix-ui/colors';
 
 export const { styled, css, global, keyframes, getCssString, theme } =
   createCss({
     theme: {
       colors: {
-        primary: '#f9f9f9',
-        primaryLight: '#ffffff',
-        primaryDark: '#c6c6c6',
-        secondary: '#3f50b5',
-        secondaryLight: '#757ce8',
-        secondaryDark: '#002884'
+        ...gray,
+        ...violetDark,
+        primary: '$gray1',
+        secondary: '$violet9',
+        secondaryLight: '$violet11',
+        secondaryDark: '$violet7'
       },
       fonts: {
         main: 'Poppins',

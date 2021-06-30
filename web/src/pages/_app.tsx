@@ -23,10 +23,10 @@ const MyApp = ({ Component, pageProps }) => {
       apiService.get('/csrf').then(async (csrfResponse) => {
         dispatch({ type: 'SET_CSRF', payload: csrfResponse.data.csrf });
         try {
-          const response = await apiService.get('/whoami');
-          dispatch({ type: 'SET_USER', payload: response.data.user });
+          const { data } = await apiService.get('/whoami');
+          dispatch({ type: 'SET_USER', payload: data.user });
         } catch (error) {
-          console.log('error in /whoami', error);
+          console.log('Error attempting to auto-login user.', error);
         }
       });
     }

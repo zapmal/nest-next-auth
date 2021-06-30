@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "@radix-ui/colors": "^0.1.7",
     "@stitches/react": "0.2.0",
     "axios": "^0.21.1",
     "next": "10.2.3",

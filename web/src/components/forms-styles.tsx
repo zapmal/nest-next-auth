@@ -20,5 +20,13 @@ export const useStyles = makeStyles(() => ({
 
 export const Information = styled('p', {
   textAlign: 'center',
-  paddingTop: '$1'
+  paddingTop: '$1',
+  variants: {
+    spacing: {
+      none: {
+        padding: 0,
+        margin: 0
+      }
+    }
+  }
 });

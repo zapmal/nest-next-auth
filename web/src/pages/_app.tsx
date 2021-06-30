@@ -20,15 +20,18 @@ const MyApp = ({ Component, pageProps }) => {
       materialUIStyles.parentElement.removeChild(materialUIStyles);
     }
     
+    /**
+     * 1. It doesn't handle the case where we can't hit /csrf.
+     * 2. Inner catch should erase the token cookie just in case(?).
+     */
     if (!state.csrfToken) {
-      setIsLoading(true);
       apiService.get('/csrf').then(async (csrfResponse) => {
+        setIsLoading(true);
         dispatch({ type: 'SET_CSRF', payload: csrfResponse.data.csrf });
         try {
           const { data } = await apiService.get('/whoami');
           dispatch({ type: 'SET_USER', payload: data.user });
         } catch (error) {
-          // This should also erase the "token" cookie(?), just in case.
           console.log('Error attempting to auto-login user.', error);
         } finally {
           setIsLoading(false);

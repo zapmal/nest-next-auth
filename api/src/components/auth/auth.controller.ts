@@ -53,7 +53,13 @@ export class AuthController {
 
     response.cookie('token', token, cookieOptions);
 
-    return user;
+    return {
+      message: 'Account created successfully.',
+      user: {
+        email: user.email,
+        name: user.name,
+      },
+    };
   }
 
   @Post('signin')

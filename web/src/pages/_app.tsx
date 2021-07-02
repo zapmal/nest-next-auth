@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Layout from 'components/Layout';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 
 import { globalStyles } from 'stitches';
-import { theme } from '../../mui-theme';
+import { theme } from '../../muiTheme';
 import { useAuth, withAuth } from 'context/AuthContext';
 
 import apiService from 'services/api';
@@ -13,30 +13,35 @@ const MyApp = ({ Component, pageProps }) => {
   const { state, dispatch } = useAuth();
   globalStyles();
 
+  const handleNoCsrf = useCallback(async () => {
+    if (!state.csrfToken) {
+      setIsLoading(true);
+      try {
+        const { data: csrfResponse } = await apiService.get('/csrf');
+        dispatch({ type: 'SET_CSRF', payload: csrfResponse.csrf });
+
+        const { data: userResponse } = await apiService.get('/whoami');
+        dispatch({ type: 'SET_USER', payload: userResponse.user });
+      } catch (error) {
+        console.log(
+          'An error occured in the CSRF request or in the Auto-Login request.',
+          error
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, [state.csrfToken]);
+
+  useEffect(() => {
+    handleNoCsrf();
+  }, [handleNoCsrf]);
+
   useEffect(() => {
     const materialUIStyles = document.querySelector('#jss-server-side');
 
     if (materialUIStyles) {
       materialUIStyles.parentElement.removeChild(materialUIStyles);
-    }
-    
-    /**
-     * 1. It doesn't handle the case where we can't hit /csrf.
-     * 2. Inner catch should erase the token cookie just in case(?).
-     */
-    if (!state.csrfToken) {
-      apiService.get('/csrf').then(async (csrfResponse) => {
-        setIsLoading(true);
-        dispatch({ type: 'SET_CSRF', payload: csrfResponse.data.csrf });
-        try {
-          const { data } = await apiService.get('/whoami');
-          dispatch({ type: 'SET_USER', payload: data.user });
-        } catch (error) {
-          console.log('Error attempting to auto-login user.', error);
-        } finally {
-          setIsLoading(false);
-        }
-      });
     }
   }, []);
 

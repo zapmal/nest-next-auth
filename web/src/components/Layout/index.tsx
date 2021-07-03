@@ -16,7 +16,7 @@ interface LayoutProps {
   children: React.ReactNode;
 };
 
-const Layout: React.FC<LayoutProps> = ({ isLoading, children }) => {
+const Layout = ({ isLoading, children }: LayoutProps) => {
   return (
     <>
       <NavigationBar loading={isLoading} />

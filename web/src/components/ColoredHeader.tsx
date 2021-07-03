@@ -18,10 +18,10 @@ interface ColoredHeaderProps {
   secondHalf: string;
 }
 
-const ColoredHeader: React.FC<ColoredHeaderProps> = ({
+const ColoredHeader = ({
   firstHalf,
   secondHalf,
-}) => {
+}: ColoredHeaderProps) => {
   return (
     <h1>
       <Colored color='primary'>{firstHalf}</Colored> {' '}

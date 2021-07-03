@@ -5,26 +5,26 @@ import { styled } from 'stitches';
 interface HighlightProps {
   tone?: 'neutral' | 'dark' | 'light';
   children: React.ReactNode;
-}
+};
 
 const StyledHighlight = styled('strong', {
   variants: {
     tone: {
       neutral: {
-        color: '$secondary'
+        color: '$secondary',
       },
       dark: {
-        color: '$secondaryDark'
+        color: '$secondaryDark',
       },
       light: {
-        color: '$secondaryLight'
-      }
-    }
-  }
-})
+        color: '$secondaryLight',
+      },
+    },
+  },
+});
 
-const Highlight: React.FC<HighlightProps> = ({ tone = 'neutral', children }) => {
-  return <StyledHighlight tone={tone}>{children}</StyledHighlight>
+const Highlight = ({ tone = 'neutral', children }: HighlightProps) => {
+  return <StyledHighlight tone={tone}>{children}</StyledHighlight>;
 };
 
 export default Highlight;

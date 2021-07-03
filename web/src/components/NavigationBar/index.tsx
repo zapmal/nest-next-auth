@@ -19,7 +19,7 @@ interface NavigationBarProps {
   loading: boolean;
 }
 
-const NavigationBar: React.FC<NavigationBarProps> = ({ loading }) => {
+const NavigationBar = ({ loading }: NavigationBarProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { state, dispatch } = useAuth();
 

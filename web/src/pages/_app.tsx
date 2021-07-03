@@ -13,6 +13,10 @@ const MyApp = ({ Component, pageProps }) => {
   const { state, dispatch } = useAuth();
   globalStyles();
 
+  /**
+   * Had to use "useCallback" here because two requests happen simultaneously, which
+   * can lead to a race condition or to the "memory leak" warning.
+   */
   const handleNoCsrf = useCallback(async () => {
     if (!state.csrfToken) {
       setIsLoading(true);

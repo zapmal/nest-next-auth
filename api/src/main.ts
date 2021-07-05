@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 
 import * as cookieParser from 'cookie-parser';
 import * as csurf from 'csurf';
+import * as helmet from 'helmet';
 import { cookieOptions } from './utils/cookie';
 
 async function bootstrap() {
@@ -11,6 +12,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
+  app.use(helmet());
   app.enableCors({ origin: 'http://localhost:3000', credentials: true });
   app.use(cookieParser());
   app.use(csurf({ cookie: { ...cookieOptions } }));

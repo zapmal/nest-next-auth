@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { Grid, Paper, TextField, Typography, Button } from '@material-ui/core';
 
 import { useStyles, Information } from 'components/forms-styles';
-import Highlight from 'components/Highlight';
 
 import { useAuth } from 'context/AuthContext';
 
@@ -94,7 +93,7 @@ const Signin = () => {
         >
           Submit
         </Button>
-      {true && <Information spacing='none'>{message}</Information>}
+      {message && <Information spacing='none'>{message}</Information>}
       </Paper>
     </form>
   );

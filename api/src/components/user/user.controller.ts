@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   UsePipes,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 
 import { UserService } from './user.service';
@@ -15,6 +16,7 @@ import { UpdateUserDTO } from './user.dto';
 import { updateUserSchema } from './user.schemas';
 
 import { JoiValidationPipe } from '../../utils/joi.pipe';
+import { AuthGuard } from 'src/utils/auth.guard';
 
 @Controller('users')
 export class UserController {
@@ -32,6 +34,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
   async getUser(@Param('id', ParseIntPipe) id: number) {
     const user = await this.userService.getUser(id);
 

@@ -24,6 +24,7 @@ export class AuthGuard implements CanActivate {
     if (!user) return false;
 
     request.user = {
+      id: user.id,
       email: user.email,
       name: user.name,
     };

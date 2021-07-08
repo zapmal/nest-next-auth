@@ -56,6 +56,7 @@ export class AuthController {
     return {
       message: 'Account created successfully.',
       user: {
+        id: user.id,
         email: user.email,
         name: user.name,
       },
@@ -84,7 +85,7 @@ export class AuthController {
     }
 
     const token = sign(
-      { email: user.email, name: user.name },
+      { id: user.id, email: user.email, name: user.name },
       process.env.JWT_SECRET,
       {
         expiresIn: process.env.JWT_EXPIRY_TIME,
@@ -96,6 +97,7 @@ export class AuthController {
     return {
       message: 'Signed in successfully.',
       user: {
+        id: user.id,
         email: user.email,
         name: user.name,
       },

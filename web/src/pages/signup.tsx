@@ -14,14 +14,14 @@ const Signin = () => {
 
   const router = useRouter();
   const styles = useStyles();
-  const { state, dispatch } = useAuth();
+  const { state: { csrfToken }, dispatch } = useAuth();
   
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     
     const config = {
       headers: {
-        'X-CSRF-Token': state.csrfToken,
+        'X-CSRF-Token': csrfToken,
       }
     };
 

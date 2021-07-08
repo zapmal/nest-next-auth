@@ -10,7 +10,7 @@ import apiService from 'services/api';
 
 const MyApp = ({ Component, pageProps }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { state, dispatch } = useAuth();
+  const { state: { csrfToken }, dispatch } = useAuth();
   globalStyles();
 
   /**
@@ -18,7 +18,7 @@ const MyApp = ({ Component, pageProps }) => {
    * can lead to a race condition or to the "memory leak" warning.
    */
   const handleNoCsrf = useCallback(async () => {
-    if (!state.csrfToken) {
+    if (!csrfToken) {
       setIsLoading(true);
       try {
         const { data: csrfResponse } = await apiService.get('/csrf');
@@ -35,7 +35,7 @@ const MyApp = ({ Component, pageProps }) => {
         setIsLoading(false);
       }
     }
-  }, [state.csrfToken]);
+  }, [csrfToken]);
 
   useEffect(() => {
     handleNoCsrf();

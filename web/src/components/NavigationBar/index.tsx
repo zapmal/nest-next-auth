@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Button } from '@material-ui/core';
 import { AiFillLock as Lock } from 'react-icons/ai';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -21,19 +22,26 @@ interface NavigationBarProps {
 
 const NavigationBar = ({ loading }: NavigationBarProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { state, dispatch } = useAuth();
+  const router = useRouter();
+  const {
+    state: { user },
+    dispatch,
+  } = useAuth();
 
   useEffect(() => {
-    if (state.user) {
+    if (user) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
     }
-  }, [state.user]);
+  }, [user]);
 
-  const handleLogout = async () => {
-    await apiService.get('/logout');
-    dispatch({ type: 'REMOVE_USER' });
+  const handleLogout = () => {
+    apiService.get('/logout').then(() => {
+      setIsLoggedIn(false);
+      dispatch({ type: 'REMOVE_USER' });
+      router.push('/');
+    });
   };
 
   return (
@@ -54,14 +62,25 @@ const NavigationBar = ({ loading }: NavigationBarProps) => {
           css='margin-right: 50px;'
         />
       ) : isLoggedIn ? (
-        <Button
-          variant='contained'
-          color='primary'
-          style={{ marginRight: '20px' }}
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
+        <>
+          <Link href={`/user/${user.id}`}>
+            <Button
+              variant='contained'
+              color='primary'
+              style={{ marginRight: '20px' }}
+            >
+              User Page
+            </Button>
+          </Link>
+          <Button
+            variant='contained'
+            color='primary'
+            style={{ marginRight: '20px' }}
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        </>
       ) : (
         ROUTES.map((route, index) => (
           <Link href={route.href} key={index}>

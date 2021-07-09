@@ -19,9 +19,9 @@
     "jsx": "preserve",
     "baseUrl": "./src",
     "paths": {
-      "components": ["/components"],
       "utils": ["/utils"],
       "stitches": ["../stitches.config.ts"],
+      "ui": ["/ui"],
       "assets": ["../assets"]
     }
   },

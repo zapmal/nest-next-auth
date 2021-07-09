@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Grid, Paper, TextField, Typography, Button } from '@material-ui/core';
-import Highlight from 'components/Highlight';
 
-import { useStyles, Information } from 'components/forms-styles';
+import Highlight from 'ui/components/Highlight';
+
+import { useStyles, Information } from 'ui/pages/forms';
 
 import { useAuth } from 'context/AuthContext';
 

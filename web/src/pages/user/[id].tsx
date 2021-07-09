@@ -5,7 +5,7 @@ import Cookies from 'cookies';
 
 import { styled } from 'stitches';
 import apiService from 'services/api';
-import Highlight from 'components/Highlight';
+import Highlight from 'ui/components/Highlight';
 
 const Container = styled('div', {
   textAlign: 'center',

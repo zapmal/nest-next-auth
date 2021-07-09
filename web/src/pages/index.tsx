@@ -1,29 +1,12 @@
-import { styled } from 'stitches';
 import Image from 'next/image';
 
-import Highlight from 'components/Highlight';
-
-const FlexContainer = styled('div', {
-  display: 'flex',
-  flexWrap: 'wrap',
-});
-
-const Container = styled('div', {
-  flex: '1 0 60%',
-  margin: '2px',
-  padding: '$3',
-  flexBasis: '40%',
-  textAlign: 'center',
-});
-
-const Header = styled('h1', {
-  color: '$secondaryDark',
-});
-
-const Information = styled('p', {
-  paddingTop: '$4',
-  fontSize: '$lg',
-});
+import Highlight from 'ui/components/Highlight';
+import {
+  FlexContainer,
+  Container,
+  Header,
+  Information
+} from 'ui/pages/home';
 
 const App = () => {
   return (
@@ -53,20 +36,5 @@ const App = () => {
     </FlexContainer>
   );
 };
-
-// export async function getServerSideProps(context: GetServerSidePropsContext) {
-//   const user = await apiService.get('/whoami', {
-//     headers: {
-//       cookie: context.req.headers.cookie
-//     }
-//   });
-
-  
-//   return {
-//     props: {
-//       user: user.data.user
-//     }
-//   };
-// }
 
 export default App;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { styled } from 'stitches';
 
-import NavigationBar from 'components/NavigationBar';
-import Footer from 'components/Footer';
+import NavigationBar from 'ui/components/NavigationBar';
+import Footer from 'ui/components/Footer';
 
 const Container = styled('main', {
   padding: '$4',

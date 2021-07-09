@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import Layout from 'components/Layout';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 
 import { globalStyles } from 'stitches';
 import { theme } from '../../muiTheme';
 import { useAuth, withAuth } from 'context/AuthContext';
+
+import Layout from 'ui/components/Layout';
 
 import apiService from 'services/api';
 

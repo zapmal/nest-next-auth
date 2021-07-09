@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Grid, Paper, TextField, Typography, Button } from '@material-ui/core';
 
-import { useStyles, Information } from 'components/forms-styles';
+import { useStyles, Information } from 'ui/pages/forms';
 
 import { useAuth } from 'context/AuthContext';
 
